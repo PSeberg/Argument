@@ -62,6 +62,8 @@ if "score" not in st.session_state:
     st.session_state.score = 0
 if "correct_answer" not in st.session_state:
     st.session_state.correct_answer = None
+if "show_feedback" not in st.session_state:
+    st.session_state.show_feedback = False
 
 # Function to show the next tes
 def show_next_tes():
@@ -77,15 +79,16 @@ def show_next_tes():
             st.session_state.current_tes_index = 0
             st.session_state.score = 0
             st.session_state.correct_answer = None
+            st.session_state.show_feedback = False
             st.rerun()
 
 # Function to handle user's answer
 def handle_answer(user_answer):
     if user_answer == st.session_state.correct_answer:
         st.session_state.score += 1
-        st.success("Rätt!")
+        st.session_state.show_feedback = "Rätt!"
     else:
-        st.error("Fel.")
+        st.session_state.show_feedback = "Fel."
     st.session_state.current_tes_index += 1
     if st.session_state.current_tes_index < len(teser):
         st.rerun()
@@ -96,6 +99,11 @@ st.write("Välj om argumentet är ett känsloargument eller ett sakargument.")
 
 if st.session_state.current_tes_index < len(teser):
     show_next_tes()
+    if st.session_state.show_feedback:
+        if st.session_state.show_feedback == "Rätt!":
+            st.success("Rätt!")
+        else:
+            st.error("Fel.")
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Känsloargument"):
