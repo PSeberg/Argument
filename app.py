@@ -55,11 +55,13 @@ teser = [
     }
 ]
 
-# Initialize session state to keep track of progress
+# Initialize session state
 if "current_tes_index" not in st.session_state:
     st.session_state.current_tes_index = 0
 if "score" not in st.session_state:
     st.session_state.score = 0
+if "correct_answer" not in st.session_state:
+    st.session_state.correct_answer = None
 
 # Function to show the next tes
 def show_next_tes():
@@ -68,12 +70,14 @@ def show_next_tes():
         st.write(f"### Tes: {tes['tes']}")
         argument_type = random.choice(["känsloargument", "sakargument"])
         st.write(f"**Argument:** {tes[argument_type]}")
-        st.session_state.current_tes_index += 1
         st.session_state.correct_answer = argument_type
     else:
         st.write(f"### Du fick {st.session_state.score} av {len(teser)} rätt!")
-        st.session_state.current_tes_index = 0
-        st.session_state.score = 0
+        if st.button("Börja om"):
+            st.session_state.current_tes_index = 0
+            st.session_state.score = 0
+            st.session_state.correct_answer = None
+            st.experimental_rerun()
 
 # Function to handle user's answer
 def handle_answer(user_answer):
@@ -82,7 +86,9 @@ def handle_answer(user_answer):
         st.success("Rätt!")
     else:
         st.error("Fel.")
-    show_next_tes()
+    st.session_state.current_tes_index += 1
+    if st.session_state.current_tes_index < len(teser):
+        st.experimental_rerun()
 
 # Streamlit app layout
 st.title("Argumenttest")
@@ -98,8 +104,4 @@ if st.session_state.current_tes_index < len(teser):
         if st.button("Sakargument"):
             handle_answer("sakargument")
 else:
-    st.write("Testet är klart. Klicka på knappen nedan för att börja om.")
-    if st.button("Börja om"):
-        st.session_state.current_tes_index = 0
-        st.session_state.score = 0
-        show_next_tes()
+    show_next_tes()
