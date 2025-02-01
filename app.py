@@ -36,7 +36,7 @@ teser = [
     {
         "tes": "Alla borde ha rätt att arbeta hemifrån.",
         "känsloargument": "Att arbeta hemifrån ger en känsla av frihet och balans mellan arbete och privatliv.",
-        "sakargument": "Hemarbete minskar pendlingstid och kan öka produktiviteten genom att anpassa arbetsmiljön efter individens behov."
+        "sakargument": "Hemarbete minskar pendlingstid och kan öka produktiviteten genom que anpassa arbetsmiljön efter individens behov."
     },
     {
         "tes": "Plastpåsar borde förbjudas.",
