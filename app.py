@@ -77,7 +77,7 @@ def show_next_tes():
             st.session_state.current_tes_index = 0
             st.session_state.score = 0
             st.session_state.correct_answer = None
-            st.experimental_rerun()
+            st.rerun()
 
 # Function to handle user's answer
 def handle_answer(user_answer):
@@ -88,7 +88,7 @@ def handle_answer(user_answer):
         st.error("Fel.")
     st.session_state.current_tes_index += 1
     if st.session_state.current_tes_index < len(teser):
-        st.experimental_rerun()
+        st.rerun()
 
 # Streamlit app layout
 st.title("Argumenttest")
