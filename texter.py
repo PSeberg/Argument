@@ -42,3 +42,40 @@ if "index" not in st.session_state:
 text = texts[st.session_state.index]
 st.title(text["title"])
 st.write(text["content"])
+
+# Funktion för att skapa svarsalternativ
+all_answers = [t["answers"] for t in texts]
+def get_options(correct_answer, key):
+    options = [correct_answer]
+    while len(options) < 3:
+        option = random.choice(all_answers)[key]
+        if option not in options:
+            options.append(option)
+    random.shuffle(options)
+    return options
+
+# Skapa svarsalternativ
+selected_tes = st.radio("Välj tes:", get_options(text["answers"]["tes"], "tes"))
+selected_sakargument = st.radio("Välj sakargument:", get_options(text["answers"]["sakargument"], "sakargument"))
+selected_kansloargument = st.radio("Välj känsloargument:", get_options(text["answers"]["känsloargument"], "känsloargument"))
+selected_motargument = st.radio("Välj motargument:", get_options(text["answers"]["motargument"], "motargument"))
+
+if st.button("Kontrollera svar"):
+    correct = sum([
+        selected_tes == text["answers"]["tes"],
+        selected_sakargument == text["answers"]["sakargument"],
+        selected_kansloargument == text["answers"]["känsloargument"],
+        selected_motargument == text["answers"]["motargument"]
+    ])
+    st.write(f"Du fick {correct}/4 rätt.")
+    if correct == 4:
+        st.success("Bra jobbat!")
+    else:
+        st.warning("Försök igen.")
+
+    if st.button("Försök igen"):
+        st.experimental_rerun()
+    if st.button("Fortsätt till nästa text"):
+        st.session_state.index = (st.session_state.index + 1) % len(texts)
+        st.experimental_rerun()
+
