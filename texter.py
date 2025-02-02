@@ -19,8 +19,8 @@ Att införa ett mobilförbud i skolan är en självklar lösning för att förb�
         "answers": {
             "tes": "Mobiltelefoner stör undervisningen och bör förbjudas i skolan.",
             "sakargument": "Studier visar att elever som inte använder mobiltelefoner under lektionstid presterar bättre.",
-            "känsloargument": "Föreställ dig en elev som kämpar med att hänga med på lektionen, men istället lockas av ett nytt meddelande som plingar till i mobilen.",
-            "motargument": "Vissa menar att mobiltelefoner kan användas som hjälpmedel i undervisningen."
+            "känsloargument": "Lärare får ständigt tjata på elever att lägga undan telefonerna, vilket tar tid och energi från undervisningen.",
+            "motargument": "Vissa menar att mobiltelefoner kan användas som hjälpmedel i undervisningen, till exempel för att slå upp fakta."
         }
     },
     {
@@ -39,7 +39,7 @@ Att införa daglig idrott i skolan är en investering i elevernas hälsa och fra
         "answers": {
             "tes": "Elever bör ha idrott varje dag för att förbättra hälsa och inlärning.",
             "sakargument": "Studier visar att fysisk aktivitet förbättrar koncentration och minne.",
-            "känsloargument": "Tänk dig en elev som är stressad över prov och läxor. En kort idrottslektion mitt på dagen skulle ge en chans att släppa pressen.",
+            "känsloargument": "En kort idrottslektion mitt på dagen skulle ge en chans att släppa pressen, röra på sig och må bättre.",
             "motargument": "En del menar att vissa elever inte gillar idrott och att det därför inte bör vara obligatoriskt varje dag."
         }
     }
@@ -54,15 +54,13 @@ st.title(text["title"])
 st.write(text["content"])
 
 # Funktion för att skapa svarsalternativ
-all_answers = [t["answers"] for t in texts]
 def get_options(correct_answer, key):
-    options = [correct_answer]
-    while len(options) < 3:
-        option = random.choice(all_answers)[key]
-        if option not in options:
-            options.append(option)
-    random.shuffle(options)
-    return options
+    options = list(text["answers"].values())  # Hämtar de fyra korrekta svaren
+    options.remove(correct_answer)  # Tar bort det korrekta svaret
+    wrong_answers = random.sample(options, 2)  # Väljer två felaktiga svar
+    final_options = [correct_answer] + wrong_answers  # Skapar en lista med tre alternativ
+    random.shuffle(final_options)
+    return final_options
 
 # Skapa svarsalternativ baserade på den aktuella texten
 selected_tes = st.radio("Välj tes:", get_options(text["answers"]["tes"], "tes"))
@@ -88,4 +86,3 @@ if st.button("Kontrollera svar"):
     if st.button("Fortsätt till nästa text"):
         st.session_state.index = (st.session_state.index + 1) % len(texts)
         st.experimental_rerun()
-
