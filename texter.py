@@ -45,10 +45,20 @@ Att införa daglig idrott i skolan är en investering i elevernas hälsa och fra
     }
 ]
 
-# Hämta nuvarande index från session_state
+# Spara nuvarande index och total poäng
 if "index" not in st.session_state:
     st.session_state.index = 0
+if "total_score" not in st.session_state:
+    st.session_state.total_score = 0
 
+# Om vi har gått igenom alla texter, visa slutsidan
+if st.session_state.index >= len(texts):
+    st.title("Grattis, du har slutfört programmet!")
+    st.write(f"Din totala poäng: **{st.session_state.total_score}/{len(texts) * 4}**")
+    st.write("Tack för att du deltog! 🎉")
+    st.stop()  # Stoppar programmet här
+
+# Annars, hämta aktuell text
 text = texts[st.session_state.index]
 
 st.title(text["title"])
@@ -69,7 +79,6 @@ def initialize_options():
             random.shuffle(final_options)
             st.session_state.options[key] = final_options  # Spara i session_state
 
-# Kör funktionen för att säkerställa att alternativen är fasta
 initialize_options()
 
 # Skapa svarsalternativ baserade på den aktuella texten
@@ -85,16 +94,13 @@ if st.button("Kontrollera svar"):
         selected_kansloargument == text["answers"]["känsloargument"],
         selected_motargument == text["answers"]["motargument"]
     ])
+    st.session_state.total_score += correct  # Lägg till poäng
     st.write(f"Du fick {correct}/4 rätt.")
     if correct == 4:
         st.success("Bra jobbat!")
     else:
         st.warning("Försök igen.")
 
-if st.button("Försök igen"):
-    st.experimental_rerun()
-
 if st.button("Fortsätt till nästa text"):
-    st.session_state.index = (st.session_state.index + 1) % len(texts)  # Gå till nästa text
-    st.rerun()  # Uppdatera sidan korrekt
-
+    st.session_state.index += 1
+    st.rerun()
