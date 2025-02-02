@@ -78,4 +78,3 @@ if st.button("Kontrollera svar"):
     if st.button("Fortsätt till nästa text"):
         st.session_state.index = (st.session_state.index + 1) % len(texts)
         st.experimental_rerun()
-
