@@ -1,4 +1,8 @@
-import streamlit as st
+pip install flask
+
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
 
 texts = [
     {
@@ -12,27 +16,24 @@ texts = [
             "yrke": "En lärare nämns i slutet av texten."
         }
     },
+    # More texts can be added here
 ]
 
-def get_user_input():
-    st.title(texts[0]["title"])
-    st.write(texts[0]["content"])
+@app.route('/')
+def index():
+    return render_template('index.html', texts=texts)
 
-    tes = st.text_input("What is the thesis (tes)?")
-    sakargument = st.text_input("What is the factual argument (sakargument)?")
-    känsloargument = st.text_input("What is the emotional argument (känsloargument)?")
-    motargument = st.text_input("What is the counter-argument (motargument)?")
-    yrke = st.text_input("What is the profession mentioned (yrke)?")
+@app.route('/check', methods=['POST'])
+def check_answers():
+    selected_answers = request.form
+    feedback = []
 
-    if st.button('Submit'):
-        feedback = ""
-        feedback += f"Tes: {'Correct' if tes == texts[0]['answers']['tes'] else 'Incorrect'}\n"
-        feedback += f"Sakargument: {'Correct' if sakargument == texts[0]['answers']['sakargument'] else 'Incorrect'}\n"
-        feedback += f"Känsloargument: {'Correct' if känsloargument == texts[0]['answers']['känsloargument'] else 'Incorrect'}\n"
-        feedback += f"Motargument: {'Correct' if motargument == texts[0]['answers']['motargument'] else 'Incorrect'}\n"
-        feedback += f"Yrke: {'Correct' if yrke == texts[0]['answers']['yrke'] else 'Incorrect'}\n"
+    # Check if the selected answers are correct
+    for key, selected in selected_answers.items():
+        correct_answer = texts[0]["answers"].get(key)
+        feedback.append(f"{key.capitalize()}: {'Correct' if selected == correct_answer else 'Incorrect'}")
 
-        st.text(feedback)
+    return render_template('feedback.html', feedback=feedback)
 
 if __name__ == "__main__":
-    get_user_input()
+    app.run(debug=True)
