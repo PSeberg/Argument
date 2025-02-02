@@ -1,9 +1,6 @@
-pip install flask
+import streamlit as st
 
-from flask import Flask, render_template, request
-
-app = Flask(__name__)
-
+# Example text and answers
 texts = [
     {
         "title": "Text 1",
@@ -16,24 +13,66 @@ texts = [
             "yrke": "En lärare nämns i slutet av texten."
         }
     },
-    # More texts can be added here
 ]
 
-@app.route('/')
-def index():
-    return render_template('index.html', texts=texts)
+# Function to display the interactive text and choices
+def display_text_and_choices():
+    st.title(texts[0]["title"])
+    st.write(texts[0]["content"])
 
-@app.route('/check', methods=['POST'])
-def check_answers():
-    selected_answers = request.form
-    feedback = []
+    # Display multiple choice options for each argument part
+    selected_tes = st.radio("Välj tes:", 
+                            options=["Mobiltelefoner är användbara i skolan för att underlätta lärandet.",
+                                     "Mobiltelefoner är distraherande i skolan.",
+                                     "Mobiltelefoner har inget att göra med skolan."])
+    
+    selected_sakargument = st.radio("Välj sakargument:",
+                                     options=["De gör det lättare att få information snabbt.",
+                                              "Mobiltelefoner förstör lärandet.",
+                                              "De hindrar elever från att fokusera på lektionerna."])
+    
+    selected_känsloargument = st.radio("Välj känsloargument:",
+                                       options=["Det känns bra att kunna kommunicera med föräldrar och vänner.",
+                                                "Det är inte bra att använda mobilen på lektioner.",
+                                                "Det skapar oro att inte ha en mobiltelefon."])
 
-    # Check if the selected answers are correct
-    for key, selected in selected_answers.items():
-        correct_answer = texts[0]["answers"].get(key)
-        feedback.append(f"{key.capitalize()}: {'Correct' if selected == correct_answer else 'Incorrect'}")
+    selected_motargument = st.radio("Välj motargument:",
+                                    options=["Mobiltelefoner kan vara distraherande.",
+                                             "Mobiltelefoner underlättar kommunikationen mellan elever.",
+                                             "Mobiltelefoner ökar koncentrationen på lektioner."])
 
-    return render_template('feedback.html', feedback=feedback)
+    selected_yrke = st.radio("Välj yrke:",
+                             options=["En lärare nämns i slutet av texten.",
+                                      "En student nämns i slutet av texten.",
+                                      "En politiker nämns i slutet av texten."])
 
+    # Button to check answers
+    if st.button("Kontrollera svar"):
+        # Checking if the answers match the correct ones
+        feedback = []
+
+        feedback.append(f"Tes: {'Correct' if selected_tes == texts[0]['answers']['tes'] else 'Incorrect'}")
+        feedback.append(f"Sakargument: {'Correct' if selected_sakargument == texts[0]['answers']['sakargument'] else 'Incorrect'}")
+        feedback.append(f"Känsloargument: {'Correct' if selected_känsloargument == texts[0]['answers']['känsloargument'] else 'Incorrect'}")
+        feedback.append(f"Motargument: {'Correct' if selected_motargument == texts[0]['answers']['motargument'] else 'Incorrect'}")
+        feedback.append(f"Yrke: {'Correct' if selected_yrke == texts[0]['answers']['yrke'] else 'Incorrect'}")
+
+        # Display feedback
+        for item in feedback:
+            st.write(item)
+
+        # Option to continue or restart
+        st.write("Vill du fortsätta eller göra om samma text?")
+        next_text = st.button("Nästa text")
+        retry_text = st.button("Gör om text")
+
+        if next_text:
+            st.write("Nästa text kommer snart...")
+            # Logic to go to next text can be added here
+        if retry_text:
+            st.write("Försök igen!")
+            # You can reset the choices if needed
+
+# Display the text and choices
 if __name__ == "__main__":
-    app.run(debug=True)
+    display_text_and_choices()
