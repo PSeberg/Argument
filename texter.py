@@ -71,6 +71,16 @@ if st.session_state.index >= len(texts):
 # Hämta aktuell text (nu med skydd mot indexfel)
 text = texts[st.session_state.index]
 
+# Visa endast förklaringar om det inte är slutsidan
+if not st.session_state.completed:
+    with st.sidebar:
+        st.header("Förklaringar")
+        st.write("**Tes** – Huvudåsikten eller budskapet i texten.")
+        st.write("**Sakargument** – Logiska resonemang. Fakta eller statistik som stödjer tesen.")
+        st.write("**Känsloargument** – Argument som är tänkta att påverka känslor hos läsaren.")
+        st.write("**Motargument** – En invändning mot tesen som sedan kan bemötas.")
+
+
 st.title(text["title"])
 st.write(text["content"])
 
