@@ -50,23 +50,33 @@ if "index" not in st.session_state:
     st.session_state.index = 0
 
 text = texts[st.session_state.index]
+
 st.title(text["title"])
 st.write(text["content"])
 
-# Funktion för att skapa svarsalternativ
-def get_options(correct_answer, key):
-    options = list(text["answers"].values())  # Hämtar de fyra korrekta svaren
-    options.remove(correct_answer)  # Tar bort det korrekta svaret
-    wrong_answers = random.sample(options, 2)  # Väljer två felaktiga svar
-    final_options = [correct_answer] + wrong_answers  # Skapar en lista med tre alternativ
-    random.shuffle(final_options)
-    return final_options
+# Funktion för att skapa svarsalternativ en gång och lagra dem i session_state
+def initialize_options():
+    if "options" not in st.session_state or st.session_state.text_id != st.session_state.index:
+        st.session_state.text_id = st.session_state.index
+        st.session_state.options = {}
+
+        for key in text["answers"]:
+            correct_answer = text["answers"][key]
+            options = list(text["answers"].values())  # Hämta alla svar
+            options.remove(correct_answer)  # Ta bort det korrekta svaret
+            wrong_answers = random.sample(options, 2)  # Välj två slumpmässiga felaktiga svar
+            final_options = [correct_answer] + wrong_answers  # Skapa lista med tre alternativ
+            random.shuffle(final_options)
+            st.session_state.options[key] = final_options  # Spara i session_state
+
+# Kör funktionen för att säkerställa att alternativen är fasta
+initialize_options()
 
 # Skapa svarsalternativ baserade på den aktuella texten
-selected_tes = st.radio("Välj tes:", get_options(text["answers"]["tes"], "tes"))
-selected_sakargument = st.radio("Välj sakargument:", get_options(text["answers"]["sakargument"], "sakargument"))
-selected_kansloargument = st.radio("Välj känsloargument:", get_options(text["answers"]["känsloargument"], "känsloargument"))
-selected_motargument = st.radio("Välj motargument:", get_options(text["answers"]["motargument"], "motargument"))
+selected_tes = st.radio("Välj tes:", st.session_state.options["tes"], key="tes")
+selected_sakargument = st.radio("Välj sakargument:", st.session_state.options["sakargument"], key="sakargument")
+selected_kansloargument = st.radio("Välj känsloargument:", st.session_state.options["känsloargument"], key="känsloargument")
+selected_motargument = st.radio("Välj motargument:", st.session_state.options["motargument"], key="motargument")
 
 if st.button("Kontrollera svar"):
     correct = sum([
