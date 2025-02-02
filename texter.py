@@ -96,4 +96,5 @@ if st.button("Försök igen"):
 
 if st.button("Fortsätt till nästa text"):
     st.session_state.index = (st.session_state.index + 1) % len(texts)  # Gå till nästa text
-    st.experimental_rerun()  # Uppdatera sidan
+    st.rerun()  # Uppdatera sidan korrekt
+
