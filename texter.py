@@ -64,6 +64,11 @@ if st.session_state.completed:
     st.stop()
 
 # Hämta aktuell text
+if st.session_state.index >= len(texts):
+    st.session_state.completed = True  # Markera att alla texter är klara
+    st.rerun()
+
+# Hämta aktuell text (nu med skydd mot indexfel)
 text = texts[st.session_state.index]
 
 st.title(text["title"])
