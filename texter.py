@@ -1,36 +1,56 @@
 import streamlit as st
 import random
 
-# Exempeltexter med rubriker kopplade till teserna och textstruktur utan markeringar
+# Nya texter
 texts = [
     {
-        "title": "Mobiltelefoner i skolan: En hjälp eller en fara?",
-        "content": "Under de senaste åren har mobiltelefoner blivit allt vanligare i svenska skolor. Medan vissa hävdar att mobiltelefoner kan vara till stor nytta för elever, finns det andra som menar att de skapar distraktioner och stör lärandet. För att förstå om mobiltelefoner verkligen är en hjälp eller en fara i skolmiljön måste vi överväga båda sidor av argumentet.\n\nFör det första finns det de som anser att mobiltelefoner är ett kraftfullt verktyg för lärande. Elever kan snabbt slå upp information på nätet, vilket gör att de kan arbeta snabbare och mer effektivt. Dessutom kan mobiltelefoner användas för att ta anteckningar, lyssna på lärande-appar eller kommunicera med lärare och klasskamrater. På detta sätt kan mobiltelefoner bidra till att förbättra elevernas engagemang och interaktivitet i lärandeprocessen.\n\nSamtidigt måste vi ta hänsyn till de negativa effekterna som mobiltelefoner kan ha i klassrummet. Många elever använder sina telefoner för att chatta, titta på sociala medier eller spela spel under lektionerna, vilket kan påverka deras koncentration och lärande. Detta är ett problem som inte kan ignoreras, och därför bör det finnas striktare regler för användning av mobiltelefoner i skolan.",
+        "title": "Inför mobilförbud i skolan",
+        "content": "I dagens samhälle är mobiltelefoner en självklar del av ungdomars vardag. De används för att hålla kontakten med vänner, spela spel och surfa på sociala medier. Men i klassrummet blir de ofta en distraktion. Trots att vissa argumenterar för att mobiler kan vara ett hjälpmedel i skolan, är nackdelarna betydligt fler än fördelarna.",
         "answers": {
-            "tes": "Mobiltelefoner är användbara i skolan för att underlätta lärandet.",
-            "sakargument": "Elever kan snabbt slå upp information på nätet, vilket gör att de kan arbeta snabbare och mer effektivt.",
-            "känsloargument": "Det är viktigt för elever att ha mobiltelefoner i skolan av säkerhetsskäl.",
-            "motargument": "Mobiltelefoner kan vara distraherande och påverka koncentrationen negativt."
+            "tes": "Mobiltelefoner stör undervisningen och bör förbjudas i skolan.",
+            "sakargument": "Studier visar att elever som inte använder mobiltelefoner under lektionstid presterar bättre.",
+            "känsloargument": "Föreställ dig en elev som kämpar med att hänga med på lektionen, men istället lockas av ett nytt meddelande som plingar till i mobilen.",
+            "motargument": "Vissa menar att mobiltelefoner kan användas som hjälpmedel i undervisningen."
         }
     },
     {
-        "title": "Klimatförändringar: Vad kan vi göra för att stoppa dem?",
-        "content": "Klimatförändringarna är ett av de största hoten mot vår planet. Med stigande temperaturer, smältande isar och extremväder som blir allt vanligare, är det tydligt att något måste göras. Frågan är dock: Vad kan vi egentligen göra för att stoppa dem?\n\nEtt av de starkaste argumenten för att bekämpa klimatförändringarna är att människans aktivitet, särskilt fossila bränslen, har en direkt påverkan på jordens klimat. Genom att minska utsläppen av växthusgaser, till exempel genom att använda mer förnybar energi och minska biltrafik, kan vi bromsa uppvärmningen av planeten. För att skydda våra resurser och framtida generationer är det avgörande att alla gör sin del.",
+        "title": "Obligatorisk idrott varje dag i skolan",
+        "content": "Allt fler unga lever ett stillasittande liv. Skärmtid ersätter fysisk aktivitet och många rör sig för lite. Samtidigt visar forskning att träning förbättrar både fysisk och mental hälsa.",
         "answers": {
-            "tes": "Människans aktivitet påverkar klimatet och vi måste agera nu för att stoppa klimatförändringar.",
-            "sakargument": "Genom att minska utsläppen av växthusgaser kan vi bromsa uppvärmningen av planeten.",
-            "känsloargument": "För många handlar det om att säkra en framtid för kommande generationer.",
-            "motargument": "Klimatförändringar är en naturlig cykel och inte orsakad av människan."
+            "tes": "Elever bör ha idrott varje dag för att förbättra hälsa och inlärning.",
+            "sakargument": "Studier visar att fysisk aktivitet förbättrar koncentration och minne.",
+            "känsloargument": "Tänk dig en elev som är stressad över prov och läxor. En kort idrottslektion mitt på dagen skulle ge en chans att släppa pressen.",
+            "motargument": "En del menar att vissa elever inte gillar idrott och att det därför inte bör vara obligatoriskt varje dag."
         }
     },
     {
-        "title": "Skoluniform: En lösning på mobbning?",
-        "content": "Mobbning är ett stort problem i många skolor, och för att minska mobbning har vissa föreslagit införandet av skoluniformer. Målet är att uniformerna ska minska skillnader mellan elever, vilket i sin tur skulle kunna minska mobbning. Men är skoluniformen verkligen lösningen?\n\nFörespråkarna av skoluniformer menar att uniformen skapar en mer jämlik miljö, där elever inte kan skilja sig åt genom sina kläder. Detta skulle kunna minska trycket på elever att ha de senaste kläderna och istället fokusera på sina studier. Dessutom kan det hjälpa till att bygga en känsla av sammanhållning och enhet inom skolan.",
+        "title": "Inför gratis kollektivtrafik för unga",
+        "content": "Många ungdomar är beroende av kollektivtrafik för att ta sig till skolan, fritidsaktiviteter och vänner. Men för många familjer är det en stor kostnad att köpa månadskort.",
         "answers": {
-            "tes": "Skoluniformer kan minska mobbning genom att minska skillnader mellan elever.",
-            "sakargument": "Skoluniformen skapar en mer jämlik miljö, där elever inte kan skilja sig åt genom sina kläder.",
-            "känsloargument": "Att inte kunna välja sina egna kläder kan upplevas som ett hot mot deras personliga frihet.",
-            "motargument": "Mobbning kan fortfarande förekomma på andra sätt, som genom kommentarer om utseende eller prestation."
+            "tes": "Ungdomar ska ha rätt till gratis kollektivtrafik för att öka frihet och jämlikhet.",
+            "sakargument": "I flera städer, som exempelvis Luxemburg, har man infört gratis kollektivtrafik och sett positiva effekter.",
+            "känsloargument": "Tänk dig en elev som vill gå på en fotbollsträning eller besöka en vän, men inte har råd med bussen.",
+            "motargument": "En del säger att gratis kollektivtrafik skulle bli för dyrt."
+        }
+    },
+    {
+        "title": "Skoluniform bör införas i svenska skolor",
+        "content": "Varje dag möts ungdomar av pressen att ha rätt kläder. Märkeskläder och trender skapar en orättvis hierarki i skolan.",
+        "answers": {
+            "tes": "Skoluniform minskar klädhets och skapar en mer jämlik skola.",
+            "sakargument": "En studie från University of Nevada visar att skoluniform kan förbättra sammanhållning och minska klädpressen.",
+            "känsloargument": "Tänk dig en elev som blir retad för sina kläder eftersom de inte är 'rätt märke'.",
+            "motargument": "Många hävdar att skoluniform tar bort elevernas möjlighet att uttrycka sin stil."
+        }
+    },
+    {
+        "title": "Skoldagar bör starta senare",
+        "content": "Många ungdomar är trötta på morgnarna och har svårt att koncentrera sig under första lektionen. Forskning visar att tonåringar behöver mer sömn, men skolor börjar för tidigt.",
+        "answers": {
+            "tes": "Skoldagar bör börja senare för att passa tonåringars biologiska sömnbehov.",
+            "sakargument": "Forskning från Harvard visar att elever som får börja skolan senare har bättre betyg och mår bättre.",
+            "känsloargument": "Tänk dig att du måste vakna klockan sex varje morgon, trots att din kropp egentligen behöver sova längre.",
+            "motargument": "Vissa säger att skoldagar då blir längre, men det kan lösas genom att minska onödiga håltimmar."
         }
     }
 ]
